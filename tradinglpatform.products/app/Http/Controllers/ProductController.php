@@ -41,7 +41,7 @@ class ProductController extends Controller
     {
         Product::destroy($id);
 
-        ProductDeleted::dispatch($id)->onQueue('main_queue');
+        // ProductDeleted::dispatch($id)->onQueue('main_queue');
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
