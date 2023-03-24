@@ -40,5 +40,9 @@
                 right: 18px;
             }
         }
+
+        &-content{
+            height: calc(100% - 87px);
+        }
     }
 }

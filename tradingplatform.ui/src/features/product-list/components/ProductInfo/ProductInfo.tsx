@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 import { getProductAsync } from '../../../../api/product';
 import Button from "../../../../components/Button/Button";
-
-import { ProducType } from "../../../../types/ProducType";
+import { CartProductData, ProducType } from "../../../../types";
 import './ProductInfo.scss';
 
 function ProductInfo(){
@@ -14,6 +14,7 @@ function ProductInfo(){
         description: "",
         price: 0
     });
+    const [cookies, setCookie] = useCookies(['cart']);
 
     useEffect(() => {
         loadProductAsync();
@@ -37,7 +38,8 @@ function ProductInfo(){
                         <div className="product-info__in-content__buy">
                             <h1>{productInfo.title}</h1>
                             <h1>{productInfo.price}</h1>
-                            <Button type="button">
+                            <Button type="button"
+                            onClick={() => addDataIntoCahe()}>
                                 в корзину
                             </Button>
                         </div>
@@ -54,6 +56,22 @@ function ProductInfo(){
         if(id){
             const { data } = await getProductAsync(Number(id));
             setProductInfo(data);
+        }
+    }
+
+    async function addDataIntoCahe() {
+        const data: CartProductData = {
+            id: productInfo.id,
+            title: productInfo.title,
+            count: 1,
+            price: productInfo.price
+        }
+
+        try{
+            setCookie('cart', JSON.stringify([...cookies.cart, data]), { path: '/' });
+        }
+        catch{
+            setCookie('cart', JSON.stringify([data]), { path: '/' });
         }
     }
 }

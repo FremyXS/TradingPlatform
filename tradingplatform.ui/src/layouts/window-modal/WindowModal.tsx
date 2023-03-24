@@ -7,10 +7,11 @@ import './WindowModal.scss';
 type WindowModalType = {
     headerName: string, 
     iconHead: ReactNode,
-    onClick: () => void
+    onClick: () => void,
+    children: ReactNode
 }
 
-function WindowModal({headerName, iconHead, onClick}:WindowModalType){
+function WindowModal({headerName, iconHead, onClick, children}:WindowModalType){
     return (
         <div className="window-modal">
             <div className="window-modal__in">
@@ -23,7 +24,7 @@ function WindowModal({headerName, iconHead, onClick}:WindowModalType){
                     </span>
                 </div>
                 <div className="window-modal__in-content">
-            
+                    {children}
                 </div>
             </div>
         </div>

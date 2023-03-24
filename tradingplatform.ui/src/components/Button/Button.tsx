@@ -2,10 +2,17 @@ import React, { ReactNode } from "react";
 
 import './Button.scss';
 
-function Button({type, children}:{type: "button" | "submit" | "reset", children?: ReactNode}){
+type ButtonType = {
+    type: "button" | "submit" | "reset", 
+    children?: ReactNode,
+    onClick?: () => void
+}
+
+function Button({type, children, onClick}: ButtonType){
     return(
         <div className="component-button">
-            <button type={type}>
+            <button type={type}
+            onClick={onClick}>
                 {children}
             </button>
         </div>

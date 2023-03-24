@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProductsAsync } from '../../api/product';
 import ProductCard from "./components/ProductCard/ProductCard";
-import { ProducType } from "../../types/ProducType";
+import { ProducType } from "../../types";
 
 import './ProductList.scss';
 

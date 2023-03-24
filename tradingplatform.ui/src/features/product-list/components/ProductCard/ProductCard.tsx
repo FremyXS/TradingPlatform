@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ProducType } from "../../../../types/ProducType";
+import { ProducType } from "../../../../types";
 import './ProductCard.scss'
 
 function ProductCard({product} : {product: ProducType}){
