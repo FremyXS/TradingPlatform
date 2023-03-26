@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController as AC;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +14,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::post('/auth/register', [UserController::class, 'register']);
-Route::post('/auth/login', [UserController::class, 'login']);
-Route::post('/auth/logout', [UserController::class, 'logout']);
+Route::group([
+    'middleware'=>'api',
+    'prefix'=>"auth"
+], function($router){
+    Route::post('/register', [AC::class, 'register']);
+    Route::post('/login', [AC::class, 'login']);
+    Route::post('/logout', [AC::class, 'logout']);
+    Route::post('/refresh', [[AC::class, 'refresh']]);
+    Route::get('/user-profile', [AC::class, 'userProfile']);
+});
