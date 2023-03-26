@@ -1,0 +1,14 @@
+.account-window{
+    &__head{
+        display: flex;
+        justify-content: space-around
+    }
+
+    &__content{
+        display: flex;
+        flex-direction: column;
+        gap: 21px;
+
+        height: 100%;
+    }
+}

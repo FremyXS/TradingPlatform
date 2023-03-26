@@ -1,0 +1,8 @@
+.input-component{
+    border-bottom: 1px solid #000000;
+    padding: 10px 8px;
+    & input{
+        font-weight: 300;
+        font-size: 24px;
+    }
+}

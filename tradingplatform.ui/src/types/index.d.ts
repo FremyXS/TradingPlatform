@@ -11,3 +11,10 @@ export type CartProductData = {
     count: number;
     price: number;
 }
+
+export type AccountCred = {
+    login?: string,
+    email?: string,
+    password?: string,
+    password_confirm?: string,
+}

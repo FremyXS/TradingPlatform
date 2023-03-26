@@ -3,15 +3,19 @@
     flex-direction: column;
     align-items: center;
 
-    background-color: #4D4AF0;
+    background: #7C1B1B;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 
     &-in{
         display: flex;
         justify-content: end;
         align-items: center;
-
+        gap: 50px;
         min-width: 1440px;
         height: 87px;
+
+        & svg{
+            cursor: pointer;
+        }
     }
 }
