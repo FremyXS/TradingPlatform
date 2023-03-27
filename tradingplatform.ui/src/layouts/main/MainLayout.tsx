@@ -7,10 +7,13 @@ import { ReactComponent as UserIcon } from '../../assets/icons/user_icon.svg'
 import CartWindow from "./components/CartWindow/CartWindow";
 import './MainLayout.scss';
 import AccountWindow from "./components/AccountWindow/AccountWindow";
+import useToken from "../../halpers/useToken";
+import { UserToken } from "../../types";
 
 function MainLayout({ children }: { children: ReactNode }) {
     const [showCartModal, setShowCartModal] = useState(false);
     const [showAccountModal, setShowAccountModal] = useState(false);
+    const { token, setToken } = useToken();
 
     return (
         <div>
@@ -18,7 +21,7 @@ function MainLayout({ children }: { children: ReactNode }) {
                 <CartWindow setShowCartModal={()=>setShowCartModal(false)}/>
             }
             {showAccountModal &&
-                <AccountWindow setShowAccountModal={()=>setShowAccountModal(false)} />
+                <AccountWindow setToken={(userToken: UserToken) => setToken(userToken)} setShowAccountModal={()=>setShowAccountModal(false)} />
             }
             <Header
                 onClickCart={() => setShowCartModal(true)}

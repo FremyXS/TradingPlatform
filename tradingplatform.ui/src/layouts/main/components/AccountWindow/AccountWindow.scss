@@ -1,4 +1,10 @@
 .account-window{
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+
+    height: 100%;
     &__head{
         display: flex;
         justify-content: space-around
@@ -10,5 +16,13 @@
         gap: 21px;
 
         height: 100%;
+
+        padding: 20px 57px  0;
+    }
+
+    &__button{        
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
     }
 }

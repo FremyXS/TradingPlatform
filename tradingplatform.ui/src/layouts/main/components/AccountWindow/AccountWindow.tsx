@@ -4,29 +4,55 @@ import { ReactComponent as UserIcon } from '../../../../assets/icons/user_icon.s
 import ButtonSwitcher from "../../../../components/ButtonSwitcher/ButtonSwitcher";
 
 import Input from "../../../../components/Input/Input";
-import './AccountWindow.scss';
-import { AccountCred } from "../../../../types";
+import { AccountLoginData, AccountRegisterData, UserToken } from "../../../../types";
+import Switcher from "../../../../components/Switcher/Switcher";
 
-function AccountWindow({ setShowAccountModal }: { setShowAccountModal: () => void }) {
+import './AccountWindow.scss';
+import Button from "../../../../components/Button/Button";
+import { loginAsync } from "../../../../api/auth";
+
+function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken: UserToken) => void, setShowAccountModal: () => void }) {
     const [switherAccount, setSwitherAccount] = useState(0);
-    const [accountData, setaAccountData] = useState<AccountCred>({
-        login: "",
+    const [accountRegisterData, setAccountRegisterData] = useState<AccountRegisterData>({
+        name: "",
         email: "",
         password: "",
         password_confirm: ""
     });
 
-    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    const [accountLoginData, setAccountLoginData] = useState<AccountLoginData>({
+        email: "",
+        password: "",
+    });
+
+    const handleAccountRegisterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
 
-        const updatedForm: AccountCred = {
-            ...accountData,
+        const updatedForm: AccountRegisterData = {
+            ...accountRegisterData,
             [name]: value,
         };
 
-        setaAccountData(updatedForm);
+        setAccountRegisterData(updatedForm);
     };
 
+    const handleAccountLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+
+        const updatedForm: AccountLoginData = {
+            ...accountLoginData,
+            [name]: value,
+        };
+
+        setAccountLoginData(updatedForm);
+    };
+
+
+    const onLoginHandleAsync = async () => {
+        const { data } = await loginAsync(accountLoginData);
+        setToken(data);
+    }
     return (
         <WindowModal headerName="аккаунт"
             iconHead={<UserIcon height={40} />}
@@ -34,59 +60,73 @@ function AccountWindow({ setShowAccountModal }: { setShowAccountModal: () => voi
         >
             <div className="account-window">
                 <div className="account-window__head">
-                    <ButtonSwitcher
-                        onClick={() => setSwitherAccount(0)}>
-                        Регистрация
-                    </ButtonSwitcher>
-                    <ButtonSwitcher
-                        onClick={() => setSwitherAccount(1)}>
-                        Вход
-                    </ButtonSwitcher>
+                    <Switcher>
+                        <ButtonSwitcher
+                            isChecked={switherAccount === 0}
+                            onClick={() => setSwitherAccount(0)}>
+                            Регистрация
+                        </ButtonSwitcher>
+                        <ButtonSwitcher
+                            isChecked={switherAccount === 1}
+                            onClick={() => setSwitherAccount(1)}>
+                            Вход
+                        </ButtonSwitcher>
+                    </Switcher>
                 </div>
-                <div className="account-window__content">
-                    {switherAccount === 0 &&
-                        <>
-                            <Input value={accountData.login}
-                                placeHolder={"login"}
+                {switherAccount === 0 &&
+                    <>
+                        <div className="account-window__content">
+                            <Input value={accountRegisterData.name}
+                                placeHolder={"name"}
                                 type="text"
-                                name="login"
-                                onChange={handleFormChange}
+                                name="name"
+                                onChange={handleAccountRegisterChange}
                             />
-                            <Input value={accountData.email}
+                            <Input value={accountRegisterData.email}
                                 placeHolder={"email"}
                                 type="email"
                                 name="email"
-                                onChange={handleFormChange}
+                                onChange={handleAccountRegisterChange}
                             />
-                            <Input value={accountData.password}
+                            <Input value={accountRegisterData.password}
                                 placeHolder={"password"}
                                 type="password"
                                 name="password"
-                                onChange={handleFormChange}
+                                onChange={handleAccountRegisterChange}
                             />
-                            <Input value={accountData.password_confirm}
+                            <Input value={accountRegisterData.password_confirm}
                                 placeHolder={"password confirm"}
                                 type="password"
                                 name="password_confirm"
-                                onChange={handleFormChange}
+                                onChange={handleAccountRegisterChange}
                             />
-                        </>}
-                    {switherAccount === 1 &&
-                        <>
-                            <Input value={accountData.email}
+                        </div>
+                        <div className="account-window__button">
+                            <Button type="submit">Регистрация</Button>
+                        </div>
+                    </>
+                }
+                {switherAccount === 1 &&
+                    <>
+                        <div className="account-window__content">
+                            <Input value={accountLoginData.email}
                                 placeHolder={"email"}
                                 type="email"
                                 name="email"
-                                onChange={handleFormChange}
+                                onChange={handleAccountLoginChange}
                             />
-                            <Input value={accountData.password}
+                            <Input value={accountLoginData.password}
                                 placeHolder={"password"}
                                 type="password"
                                 name="password"
-                                onChange={handleFormChange}
+                                onChange={handleAccountLoginChange}
                             />
-                        </>}
-                </div>
+                        </div>
+                        <div className="account-window__button">
+                            <Button type="submit" onClick={onLoginHandleAsync}>Вход</Button>
+                        </div>
+                    </>
+                }
             </div>
         </WindowModal>
     )
