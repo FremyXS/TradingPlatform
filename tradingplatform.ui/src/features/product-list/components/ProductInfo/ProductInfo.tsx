@@ -6,13 +6,19 @@ import Button from "../../../../components/Button/Button";
 import { CartProductData, ProducType } from "../../../../types";
 import './ProductInfo.scss';
 
-function ProductInfo(){
+function ProductInfo() {
     const { id } = useParams()
     const [productInfo, setProductInfo] = useState<ProducType>({
         id: 0,
         title: "",
+        image_url: "",
         description: "",
-        price: 0
+        release_date: "",
+        price: 0,
+        genres_name: "",
+        type_products_name: "",
+        platforms_name: "",
+        developers_name: ""
     });
     const [cookies, setCookie] = useCookies(['cart']);
 
@@ -20,26 +26,42 @@ function ProductInfo(){
         loadProductAsync();
     }, [])
 
-    return(
+    return (
         <div className="product-info">
             <div className="product-info__header"
-            style={{
-                backgroundImage: "url(https://7themes.su/_ph/28/313544153.jpg?1674990037)"
-            }}
+                style={{
+                    backgroundImage: `url(${productInfo.image_url})`
+                }}
             >
             </div>
             <div className="product-info__in">
                 <div className="product-info__in-content">
                     <div className="product-info__in-content__left">
-                        <img src="https://7themes.su/_ph/28/313544153.jpg?1674990037" 
+                        <img src={productInfo.image_url}
                         />
+                        <div className="product-info__in-content__left-attributes">
+                            <dl className="product-info__in-content__left-attributes__keys">
+                                <dt>Тип</dt>
+                                <dt>Платформа</dt>
+                                <dt>Жанр</dt>
+                                <dt>Дата выхода</dt>
+                                <dt>Разработчик</dt>
+                            </dl>
+                            <dl className="product-info__in-content__left-attributes__values"> 
+                                <dt>{productInfo.type_products_name}</dt>
+                                <dt>{productInfo.platforms_name}</dt>
+                                <dt>{productInfo.genres_name}</dt>
+                                <dt>{productInfo.release_date}</dt>
+                                <dt>{productInfo.developers_name}</dt>
+                            </dl>
+                        </div>
                     </div>
-                    <div className="product-info__in-content__right">                        
+                    <div className="product-info__in-content__right">
                         <div className="product-info__in-content__buy">
                             <h1>{productInfo.title}</h1>
                             <h1>{productInfo.price}</h1>
                             <Button type="button"
-                            onClick={() => addDataIntoCahe()}>
+                                onClick={() => addDataIntoCahe()}>
                                 в корзину
                             </Button>
                         </div>
@@ -52,8 +74,8 @@ function ProductInfo(){
         </div>
     )
 
-    async function loadProductAsync(){
-        if(id){
+    async function loadProductAsync() {
+        if (id) {
             const { data } = await getProductAsync(Number(id));
             setProductInfo(data);
         }
@@ -67,10 +89,10 @@ function ProductInfo(){
             price: productInfo.price
         }
 
-        try{
+        try {
             setCookie('cart', JSON.stringify([...cookies.cart, data]), { path: '/' });
         }
-        catch{
+        catch {
             setCookie('cart', JSON.stringify([data]), { path: '/' });
         }
     }

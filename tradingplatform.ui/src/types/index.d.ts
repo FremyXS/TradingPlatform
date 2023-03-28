@@ -1,8 +1,14 @@
 export type ProducType = {
     id: number;
     title: string;
+    image_url: string;
     description: string;
+    release_date: string;
     price: number;
+    genres_name: string,
+    type_products_name: string
+    platforms_name: string,
+    developers_name: string
 };
 
 export type CartProductData = {

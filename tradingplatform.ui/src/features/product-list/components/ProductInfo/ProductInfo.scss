@@ -33,6 +33,40 @@
                     width: 375px;
                     height: 479px;
                 }
+
+                &-attributes{
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
+                    width: 375px;
+                    background: rgba(0, 0, 0, 0.5);
+
+                    padding: 26px 0 30px;
+
+                    dl {
+                        dt {
+                            font-weight: 400;
+                            font-size: 16px;
+
+                            &:nth-last-child(n+2){
+                                margin-bottom: 16px;
+                            }
+                        }
+                    }
+
+                    &__keys{
+                        dt {
+                            text-align: right;
+                            color: #BEBEBE;
+                        }
+                    }
+
+                    &__values{
+                        dt {
+                            color: #fff;
+                        }
+                    }
+                }
             }
 
             &__right{
