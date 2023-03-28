@@ -13,29 +13,25 @@ class product extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'genres_id',
-        'type_products_id',
-        'platforms_id',
-        'developers_id'
     ];
 
     public function genre()
     {
-        return $this->belongsTo(Genre::class, 'genres_id');
+        return $this->belongsTo(Genre::class, 'genres_name');
     }
 
     public function developer()
     {
-        return $this->belongsTo(Developer::class, 'developers_id');
+        return $this->belongsTo(Developer::class, 'developers_name');
     }
 
     public function platform()
     {
-        return $this->belongsTo(Platform::class, 'platforms_id');
+        return $this->belongsTo(Platform::class, 'platforms_name');
     }
 
     public function typeProduct()
     {
-        return $this->belongsTo(TypeProduct::class, 'type_products_id');
+        return $this->belongsTo(TypeProduct::class, 'type_products_name');
     }
 }

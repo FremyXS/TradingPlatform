@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Developer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DeveloperSeeder extends Seeder
 {
@@ -13,6 +14,10 @@ class DeveloperSeeder extends Seeder
      */
     public function run(): void
     {
-        Developer::factory(5)->create();
+        DB::table('developers')->insert([
+            ['name' => 'Петушки'],
+            ['name' => 'Донатная помойка'],
+            ['name' => 'ValShit'],
+        ]);
     }
 }

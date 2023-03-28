@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->foreignId('genres_id')->constrained();
-            $table->foreignId('type_products_id')->constrained();
-            $table->foreignId('platforms_id')->constrained();
-            $table->foreignId('developers_id')->constrained();
+            $table->foreign('genres_name')->references("name")->on("genres");
+            $table->foreign('type_products_name')->references("name")->on("type_products");
+            $table->foreign('platforms_name')->references("name")->on("platforms");
+            $table->foreign('developers_name')->references("name")->on("developers");
         });
     }
 
@@ -25,10 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('genres_id');
-            $table->dropColumn('type_products_id');
-            $table->dropColumn('platforms_id');
-            $table->dropColumn('developers_id');
+            $table->dropForeign('genres_name');
+            $table->dropForeign('type_products_name');
+            $table->dropForeign('platforms_name');
+            $table->dropForeign('platforms_name');
         });
     }
 };
