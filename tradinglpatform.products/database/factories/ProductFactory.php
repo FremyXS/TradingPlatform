@@ -20,8 +20,14 @@ class ProductFactory extends Factory
     {
         return [
             'title' => $this->faker->text(30),
-            'description' => $this->faker->text(400),
+            'image_url' => "https://gamebomb.ru/files/galleries/001/2/24/347929.jpg",
+            'description' => $this->faker->text(1000),
+            'release_date'=>$this->faker->date("d-m-Y"),
             'price' => 9.99,
+            'genres_id' =>  rand(1, 11),
+            'type_products_id'=>rand(1, 2),
+            'platforms_id'=>rand(1, 7),
+            'developers_id'=>rand(1, 5)
         ];
     }
 }

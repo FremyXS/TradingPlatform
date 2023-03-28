@@ -11,7 +11,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Product::all();
+        return $products = Product::with(
+            'genre:id,name',
+            'typeProduct:id,name',
+            'platform:id,name',
+            'developer:id,name'
+        )->get();
     }
 
     public function show($id)
