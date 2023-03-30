@@ -15,4 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('products', ProductController::class);
+// Route::apiResource('products', ProductController::class);
+
+Route::group([
+    'middleware'=>'api',
+    'prefix'=>"products"
+], function($router){
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/filters', [ProductController::class, 'getAllFilters']);
+    Route::get('/{id}', [ProductController::class, 'show']);
+});
