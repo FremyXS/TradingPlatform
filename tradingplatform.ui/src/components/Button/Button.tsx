@@ -5,7 +5,7 @@ import './Button.scss';
 type ButtonType = {
     type: "button" | "submit" | "reset", 
     children?: ReactNode,
-    onClick?: () => void
+    onClick?: () => void,
 }
 
 function Button({type, children, onClick}: ButtonType){

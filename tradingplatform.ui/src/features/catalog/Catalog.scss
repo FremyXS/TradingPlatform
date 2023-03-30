@@ -1,0 +1,19 @@
+.catalog{
+    display: flex;
+    justify-content: center;
+
+    &-in{
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-title{
+        h1 {
+            color: #000;
+        }
+    }
+    &-content{
+        display: flex;
+        gap: 20px;
+    }
+}

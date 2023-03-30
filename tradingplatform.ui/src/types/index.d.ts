@@ -11,6 +11,21 @@ export type ProducType = {
     developers_name: string
 };
 
+export type FiltersType = {
+    developers:{name: string} [],
+    genre: {name: string}[],
+    platforms: {name: string}[],
+    typeProducts: {name: string}[],
+}
+
+export type CatalogFiltersType = {
+    price: {start: number, end: number},
+    genre: string[],
+    platforms: string[],
+    types: string[],
+    developers: string[]
+}
+
 export type CartProductData = {
     id: number;
     title: string;

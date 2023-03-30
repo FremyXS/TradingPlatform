@@ -5,15 +5,15 @@ import { Route, Routes } from 'react-router';
 import ProductInfo from './features/product-list/components/ProductInfo/ProductInfo';
 
 import './styles/global.scss'
+import Catalog from './features/catalog/Catalog';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<ProductList />} />
-        <Route path='/product/:id' element={<ProductInfo />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path='/' element={<ProductList />} />
+      <Route path='/catalog' element={<Catalog />} />
+      <Route path='/product/:id' element={<ProductInfo />} />
+    </Routes>
   );
 }
 
