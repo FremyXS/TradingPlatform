@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 
 class AuthController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'refresh']]);
     }
 
     public function register(Request $request){
@@ -50,12 +50,14 @@ class AuthController extends Controller
         }
         return $this->createNewToken($token);
     }
-    public function logout(Request $request){
+    public function logout(){
         auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }
     public function refresh() {
-        return $this->createNewToken(auth()->refresh());
+        $user = auth()->user();
+        $token = auth()->refresh();
+        return $this->createNewToken($token);
     }
     protected function createNewToken($token){
         return response()->json([
