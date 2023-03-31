@@ -10,6 +10,7 @@ import Switcher from "../../../../components/Switcher/Switcher";
 import './AccountWindow.scss';
 import Button from "../../../../components/Button/Button";
 import { loginAsync } from "../../../../api/auth";
+import { createAuthProvider } from "../../../../halpers/createAuthProvider";
 
 function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken: UserToken) => void, setShowAccountModal: () => void }) {
     const [switherAccount, setSwitherAccount] = useState(0);
@@ -51,7 +52,9 @@ function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken:
 
     const onLoginHandleAsync = async () => {
         const { data } = await loginAsync(accountLoginData);
-        setToken(data);
+        const authProvider = createAuthProvider();
+        console.log(1);
+        authProvider.login(data);
     }
     return (
         <WindowModal headerName="аккаунт"

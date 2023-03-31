@@ -11,6 +11,10 @@ export type ProducType = {
     developers_name: string
 };
 
+export type FilterType = {
+    name: string
+}
+
 export type FiltersType = {
     developers:{name: string} [],
     genre: {name: string}[],

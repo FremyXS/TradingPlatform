@@ -4,10 +4,13 @@ import { ReactComponent as CartIcon } from '../../../../assets/icons/shopping-ca
 import { ReactComponent as UserIcon } from '../../../../assets/icons/user_icon.svg';
 import { ReactComponent as LogoIcon } from '../../../../assets/icons/logo.svg';
 
-import './Header.scss';
 import { Link } from "react-router-dom";
 
-function Header({ onClickCart, onClickAccount }: { onClickCart: () => void, onClickAccount: () => void }) {
+import './Header.scss';
+import DropDown from "../../../../components/DropDown/DropDown";
+
+function Header({ logged, onClickCart, onClickAccount, onClickLogaout }: { logged: boolean, onClickCart: () => void, onClickAccount: () => void, onClickLogaout? : () => void }) {
+
     return (
         <div className="header">
             <div className="header-in">
@@ -18,11 +21,27 @@ function Header({ onClickCart, onClickAccount }: { onClickCart: () => void, onCl
                 <CartIcon
                     height={40}
                     onClick={onClickCart} />
-                <UserIcon
-                    height={40}
-                    onClick={onClickAccount} />
+                {logged &&
+                    <DropDown
+                        values={[
+                            {name: "Панель Аккаунт", onClick: onClickAccount},
+                            { name: "Выйти", onClick: onClickLogaout! } 
+                        ]}
+                    >
+                        <div className="account-info">
+                            <span></span>
+                            <UserIcon
+                                height={40} />
+                        </div>
+                    </DropDown>
+                }
+                {!logged &&
+                    <UserIcon
+                        height={40}
+                        onClick={onClickAccount} />
+                }
             </div>
-        </div>
+        </div >
     )
 }
 

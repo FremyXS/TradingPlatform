@@ -1,0 +1,10 @@
+.products-panel{
+    &__content{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .component-button > button{
+        width: 100%;
+    }
+}
