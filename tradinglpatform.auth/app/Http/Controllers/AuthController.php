@@ -19,6 +19,7 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:6',
+            'address' => 'string',
         ]);
 
         if($validator->fails()){
@@ -27,7 +28,7 @@ class AuthController extends Controller
 
         $user = User::create(array_merge(
             $validator->validated(),
-            ['password' => bcrypt($request->password)]
+            ['password' => bcrypt($request->password), 'role' => "Normal"],
         ));
 
         return response()->json([
@@ -65,7 +66,7 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             // 'expires_in' => auth()->factory()->getTTL() * 60,
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'role' => auth()->user()->role
         ]);
     }
     public function userProfile(Request $request){
