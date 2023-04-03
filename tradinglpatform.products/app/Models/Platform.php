@@ -10,4 +10,6 @@ class Platform extends Model
     use HasFactory;
 
     protected $table = 'platforms';
+    protected $primaryKey = "name";
+    public $incrementing = false;
 }

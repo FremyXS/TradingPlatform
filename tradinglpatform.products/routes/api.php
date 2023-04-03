@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\TypeProductController;
+use App\Http\Controllers\DeveloperController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +28,34 @@ Route::group([
     Route::get('/', [ProductController::class, 'index']);
     Route::get('/filters', [ProductController::class, 'getAllFilters']);
     Route::get('/{id}', [ProductController::class, 'show']);
+});
+
+Route::group([
+    'middleware'=>'api',
+    'prefix'=>"filters"
+], function($router){
+    Route::group([
+        'prefix'=>"genres"
+    ], function($router){
+        Route::get('/', [GenreController::class, 'index']);
+        Route::post('/', [GenreController::class, 'create']);
+    });
+    Route::group([
+        'prefix'=>"platforms"
+    ], function($router){
+        Route::get('/', [PlatformController::class, 'index']);
+        Route::post('/', [PlatformController::class, 'create']);
+    });
+    Route::group([
+        'prefix'=>"type-products"
+    ], function($router){
+        Route::get('/', [TypeProductController::class, 'index']);
+        Route::post('/', [TypeProductController::class, 'create']);
+    });
+    Route::group([
+        'prefix'=>"developers"
+    ], function($router){
+        Route::get('/', [DeveloperController::class, 'index']);
+        Route::post('/', [DeveloperController::class, 'create']);
+    });
 });

@@ -10,4 +10,6 @@ class TypeProduct extends Model
     use HasFactory;
 
     protected $table = 'type_products';
+    protected $primaryKey = "name";
+    public $incrementing = false;
 }

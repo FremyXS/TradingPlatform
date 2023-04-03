@@ -10,4 +10,6 @@ class Genre extends Model
     use HasFactory;
 
     protected $table = 'genres';
+    protected $primaryKey = "name";
+    public $incrementing = false;
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Developer extends Model
 {
     use HasFactory;
-
     protected $table = 'developers';
+    protected $primaryKey = "name";
+    public $incrementing = false;
+
 }
