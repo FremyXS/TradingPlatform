@@ -25,10 +25,12 @@ function MainLayout({ children }: { children: ReactNode }) {
                 <AccountWindow setToken={(userToken: UserToken) => authProvider.login(userToken)} setShowAccountModal={() => setShowAccountModal(false)} />
             }
             <Header
+                role={authProvider.getRole()}
                 logged={logged}
                 onClickCart={() => setShowCartModal(true)}
                 onClickAccount={() => logged? navigate('/account') :setShowAccountModal(true)} 
-                onClickLogaout={() => authProvider.logout()}/>
+                onClickLogaout={() => authProvider.logout()}
+                onClickToHome={()=>navigate('/')}/>
             {children}
         </div>
     );

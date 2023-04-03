@@ -6,15 +6,28 @@ import { ReactComponent as LogoIcon } from '../../../../assets/icons/logo.svg';
 
 import { Link } from "react-router-dom";
 
-import './Header.scss';
 import DropDown from "../../../../components/DropDown/DropDown";
+import { roles } from "../../../../types/index.d";
 
-function Header({ logged, onClickCart, onClickAccount, onClickLogaout }: { logged: boolean, onClickCart: () => void, onClickAccount: () => void, onClickLogaout? : () => void }) {
+import './Header.scss';
+
+interface HeaderType {
+    logged: boolean,
+    role: string | null,
+    onClickCart: () => void,
+    onClickAccount: () => void,
+    onClickLogaout?: () => void,
+    onClickToHome?: () => void,
+}
+
+function Header({ logged, role, onClickCart, onClickAccount, onClickLogaout, onClickToHome }: HeaderType) {
+
+
 
     return (
         <div className="header">
             <div className="header-in">
-                <LogoIcon height={70} />
+                <LogoIcon height={70} onClick={onClickToHome}/>
                 <nav>
                     <Link to="/catalog">Каталог</Link>
                 </nav>
@@ -23,10 +36,17 @@ function Header({ logged, onClickCart, onClickAccount, onClickLogaout }: { logge
                     onClick={onClickCart} />
                 {logged &&
                     <DropDown
-                        values={[
-                            {name: "Панель Аккаунт", onClick: onClickAccount},
-                            { name: "Выйти", onClick: onClickLogaout! } 
-                        ]}
+                        values={
+                            role && role === roles.admin?
+                            [
+                                { name: "Панель Аккаунт", onClick: onClickAccount },
+                                { name: "Выйти", onClick: onClickLogaout! }
+                            ]
+                            :
+                            [
+                                { name: "Выйти", onClick: onClickLogaout! }
+                            ]
+                        }
                     >
                         <div className="account-info">
                             <span></span>

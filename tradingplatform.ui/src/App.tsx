@@ -6,8 +6,12 @@ import ProductInfo from './features/product-list/components/ProductInfo/ProductI
 import Catalog from './features/catalog/Catalog';
 
 import { createAuthProvider } from './halpers/createAuthProvider';
-import './styles/global.scss'
 import Account from './features/account/Account';
+import { roles } from './types/index.d';
+
+import { Navigate } from 'react-router-dom';
+
+import './styles/global.scss'
 
 function App() {
   const authProvider = createAuthProvider();
@@ -18,7 +22,7 @@ function App() {
       <Route path='/*' element={<ProductList />} />
       <Route path='/catalog' element={<Catalog />} />
       <Route path='/product/:id' element={<ProductInfo />} />
-      {logged && 
+      {logged && authProvider.getRole() && authProvider.getRole() === roles.admin &&
         <Route path='/account' element={<Account />} />
       }
     </Routes>

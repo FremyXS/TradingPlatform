@@ -22,6 +22,11 @@ export const createAuthProvider = () => {
         }
     }
 
+    const getRole = () => {
+        const role = tokenProvider.getRole();
+        return role;
+    }
+
     const useAuth = () => {
         const [isLogged, setIsLogged] = useState(tokenProvider.isLoggedIn());
 
@@ -41,6 +46,7 @@ export const createAuthProvider = () => {
 
     return {
         useAuth,
+        getRole,
         authHeader,
         login,
         logout

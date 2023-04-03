@@ -41,7 +41,8 @@ export type AccountRegisterData = {
     name?: string,
     email?: string,
     password?: string,
-    password_confirm?: string,
+    password_confirmation?: string,
+    address?: string
 }
 
 export type AccountLoginData = {
@@ -52,5 +53,12 @@ export type AccountLoginData = {
 }
 
 export type UserToken = {
-    access_token: string
+    access_token: string,
+    role: string
+}
+
+export const roles = {
+    admin: "Admin",
+    seller: "Seller",
+    normal: "Normal"
 }

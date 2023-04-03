@@ -9,7 +9,7 @@ import Switcher from "../../../../components/Switcher/Switcher";
 
 import './AccountWindow.scss';
 import Button from "../../../../components/Button/Button";
-import { loginAsync } from "../../../../api/auth";
+import { loginAsync, registerAsync } from "../../../../api/auth";
 import { createAuthProvider } from "../../../../halpers/createAuthProvider";
 
 function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken: UserToken) => void, setShowAccountModal: () => void }) {
@@ -18,7 +18,8 @@ function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken:
         name: "",
         email: "",
         password: "",
-        password_confirm: ""
+        password_confirmation: "",
+        address: ""
     });
 
 
@@ -53,9 +54,13 @@ function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken:
     const onLoginHandleAsync = async () => {
         const { data } = await loginAsync(accountLoginData);
         const authProvider = createAuthProvider();
-        console.log(1);
         authProvider.login(data);
     }
+
+    const onRegisterHandleAsync = async () => {
+        await registerAsync(accountRegisterData);
+    }
+
     return (
         <WindowModal headerName="аккаунт"
             iconHead={<UserIcon height={40} />}
@@ -97,15 +102,21 @@ function AccountWindow({setToken, setShowAccountModal }: { setToken: (userToken:
                                 name="password"
                                 onChange={handleAccountRegisterChange}
                             />
-                            <Input value={accountRegisterData.password_confirm}
-                                placeHolder={"password confirm"}
+                            <Input value={accountRegisterData.password_confirmation}
+                                placeHolder={"password confirmation"}
                                 type="password"
-                                name="password_confirm"
+                                name="password_confirmation"
+                                onChange={handleAccountRegisterChange}
+                            />
+                            <Input value={accountRegisterData.address}
+                                placeHolder={"address"}
+                                type="text"
+                                name="address"
                                 onChange={handleAccountRegisterChange}
                             />
                         </div>
                         <div className="account-window__button">
-                            <Button type="submit">Регистрация</Button>
+                            <Button onClick={onRegisterHandleAsync} type="submit">Регистрация</Button>
                         </div>
                     </>
                 }

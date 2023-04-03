@@ -4,63 +4,133 @@ import Switcher from "../../../../components/Switcher/Switcher";
 import ButtonSwitcher from "../../../../components/ButtonSwitcher/ButtonSwitcher";
 
 import Button from "../../../../components/Button/Button";
+import PanelRow from "./component/PanelRow/PanelRow";
 import { FilterType, ProducType } from "../../../../types"
-import { getProductsAsync } from "../../../../api/product";
+import { getDevelopersAsync, getGenresAsync, getPlatformsAsync, getProductsAsync, getTypeProductsAsync, postDeveloperAsync, postGenreAsync, postPlatformAsync, postTypeProductAsync } from "../../../../api/product";
 
 import './ProductsPanel.scss';
 
-function ProductsPanel() {
-    const [switherAccount, setSwitherAccount] = useState(0);
-    const [content, setContent] = useState<ProducType[] | FilterType[]>([]);
+function ProductsPanel({ onSetWindowSetting }: 
+    { onSetWindowSetting: (headerName: string, 
+        onButtonSubmit: (body: { name: string }) => void, 
+        category: "filters" | "products") => void }) {
 
-    async function loginProductAsync() {
-        setSwitherAccount(0);
+    const [switherAccount, setSwitherAccount]
+        = useState<"Products" | "Genres" | "Platforms" | "Type Products" | "Developers">("Products");
+    const [content, setContent] = useState<ProducType[] | FilterType[]>([]);
+    const [postMethod, setPostMethod] = useState<(body: { name: string }) => void >(postDeveloperAsync);
+
+    async function loadProductsAsync() {
+        setSwitherAccount("Products");
         const { data } = await getProductsAsync();
         setContent(data);
+        setPostMethod(postDeveloperAsync);
+    }
+
+    async function loadGenresAsync() {
+        setSwitherAccount("Genres");
+        const { data } = await getGenresAsync();
+        setContent(data);
+        setPostMethod(postGenreAsync);
+    }
+
+    async function loadPlatformsAsync() {
+        setSwitherAccount("Platforms");
+        const { data } = await getPlatformsAsync();
+        setContent(data);
+        setPostMethod(postPlatformAsync);
+    }
+
+    async function loadTypeProductsAsync() {
+        setSwitherAccount("Type Products");
+        const { data } = await getTypeProductsAsync();
+        setContent(data);
+        setPostMethod(postTypeProductAsync);
+    }
+
+    async function loadDevelopersAsync() {
+        setSwitherAccount("Developers");
+        const { data } = await getDevelopersAsync();
+        setContent(data);
+        setPostMethod(postDeveloperAsync);
+    }
+
+
+    const getFieldSettings = () => {
+        switch (switherAccount) {
+            case "Products":
+                return "products";
+            default:
+                return "filters";
+        }
+    }
+
+    async function getPostMethod(body: {name: string}) {
+        switch (switherAccount) {
+            case "Developers":
+                return postDeveloperAsync(body);
+            case "Genres":
+                return postGenreAsync(body);
+            case "Platforms":
+                return postPlatformAsync(body);
+            case "Type Products":
+                return postTypeProductAsync(body);
+            default:
+                throw new DOMException("sdgdsgsdg");
+        }
     }
 
     return (
         <div className="products-panel">
             <Switcher>
                 <ButtonSwitcher
-                    isChecked={switherAccount === 0}
-                    onClick={() => loginProductAsync()}>
+                    isChecked={switherAccount === "Products"}
+                    onClick={() => loadProductsAsync()}>
                     Товары
                 </ButtonSwitcher>
                 <ButtonSwitcher
-                    isChecked={switherAccount === 1}
-                    onClick={() => setSwitherAccount(1)}>
+                    isChecked={switherAccount === "Genres"}
+                    onClick={() => loadGenresAsync()}>
                     Жанры
                 </ButtonSwitcher>
                 <ButtonSwitcher
-                    isChecked={switherAccount === 2}
-                    onClick={() => setSwitherAccount(2)}>
+                    isChecked={switherAccount === "Platforms"}
+                    onClick={() => loadPlatformsAsync()}>
                     Платформы
                 </ButtonSwitcher>
                 <ButtonSwitcher
-                    isChecked={switherAccount === 3}
-                    onClick={() => setSwitherAccount(3)}>
+                    isChecked={switherAccount === "Type Products"}
+                    onClick={() => loadTypeProductsAsync()}>
                     Типы
                 </ButtonSwitcher>
                 <ButtonSwitcher
-                    isChecked={switherAccount === 4}
-                    onClick={() => setSwitherAccount(4)}>
+                    isChecked={switherAccount === "Developers"}
+                    onClick={() => loadDevelopersAsync()}>
                     Разработчики
                 </ButtonSwitcher>
                 <ButtonSwitcher
-                    isChecked={switherAccount === 5}
-                    onClick={() => setSwitherAccount(5)}>
+                    isChecked={switherAccount === "Developers"}
+                    onClick={() => loadDevelopersAsync()}>
                     Аккаунты
                 </ButtonSwitcher>
             </Switcher>
             <div className="products-panel__content">
-                <Button type={"button"}>
+                <Button type="button"
+                    onClick={() => {
+                        onSetWindowSetting(switherAccount,
+                            getPostMethod,
+                            getFieldSettings())
+                    }}>
                     Добавить
                 </Button>
                 <div className="products-panel__content-data" >
-                    {switherAccount === 0 &&
-                        content.map((value, index)=>
-                            <div key={index}>{(value as ProducType).title}</div>
+                    {switherAccount === "Products" ?
+                        (content as ProducType[]).map((value, index) =>
+                            <PanelRow key={index} title={value.title} />
+                        )
+                        :
+                        (content as FilterType[]).map((value, index) =>
+                            <PanelRow key={index} title={value.name} />
                         )
                     }
                 </div>

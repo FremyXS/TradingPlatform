@@ -18,6 +18,10 @@ export default function createTokenProvider() {
         return _token && _token.access_token;
     };
 
+    const getRole = () => {
+        return _token && _token.role;
+    }
+
 
     const setToken = (token: UserToken | null) => {
         if (token) {
@@ -92,6 +96,7 @@ export default function createTokenProvider() {
 
     return {
         getToken,
+        getRole,
         isLoggedIn,
         setToken,
         subscribe,
