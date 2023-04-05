@@ -20,15 +20,22 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:6',
             'address' => 'string',
+            'role' => 'string|nullable'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors(), 400);
         }
 
+        $role = $validator->validated()['role'];
+
+        if($role == null){
+            $role = 'Normal';
+        }
+
         $user = User::create(array_merge(
             $validator->validated(),
-            ['password' => bcrypt($request->password), 'role' => "Normal"],
+            ['password' => bcrypt($request->password), 'role' =>  $role],
         ));
 
         return response()->json([
@@ -70,7 +77,7 @@ class AuthController extends Controller
         ]);
     }
     public function userProfile(Request $request){
-        $user = auth('api')->user();
-        return response()->json(['user'=>$user], 201);
+        $user = auth()->user();
+        return response()->json($user, 201);
     }
 }

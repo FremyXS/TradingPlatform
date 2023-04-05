@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController as AC;
 
@@ -23,4 +24,11 @@ Route::group([
     Route::post('/logout', [AC::class, 'logout']);
     Route::post('/refresh', [[AC::class, 'refresh']]);
     Route::get('/user-profile', [AC::class, 'userProfile']);
+});
+
+Route::group([
+    'middleware'=>'api',
+    'prefix'=>"users"
+], function($router){
+    Route::get('/', [UserController::class, 'index']);
 });
