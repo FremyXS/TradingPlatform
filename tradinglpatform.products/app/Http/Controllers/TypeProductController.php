@@ -20,4 +20,16 @@ class TypeProductController extends Controller
         $developer->save();
         return response($developer, Response::HTTP_CREATED);
     }
+    public function delete($name){
+        $data = TypeProduct::find($name);
+        $data->delete();
+        return response($name, 'Record deleted successfully');
+    }
+
+    public function update($name, Request $request){
+        $data = TypeProduct::find($name);
+        $data->name = $request->input('name');
+        $data->save();
+        return response($$request->input('name'),  Response::HTTP_ACCEPTED);
+    }
 }

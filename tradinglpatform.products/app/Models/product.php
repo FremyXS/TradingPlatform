@@ -15,6 +15,10 @@ class product extends Model
         'updated_at',
     ];
 
+    protected $fillable = [
+        'genres_name',
+    ];
+
     public function genre()
     {
         return $this->belongsTo(Genre::class, 'genres_name');

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->text('description');
             $table->date('release_date');
             $table->double('price');
-            $table->string('genres_name');
-            $table->string('type_products_name');
-            $table->string('platforms_name');
-            $table->string('developers_name');
+            $table->string('genres_name')->nullable();
+            $table->string('type_products_name')->nullable();
+            $table->string('platforms_name')->nullable();
+            $table->string('developers_name')->nullable();
             $table->timestamps();
         });
     }

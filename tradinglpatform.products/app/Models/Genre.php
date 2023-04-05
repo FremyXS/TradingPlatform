@@ -12,4 +12,8 @@ class Genre extends Model
     protected $table = 'genres';
     protected $primaryKey = "name";
     public $incrementing = false;
+
+    protected $fillable = [
+        'name',
+    ];
 }

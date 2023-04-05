@@ -20,4 +20,16 @@ class PlatformController extends Controller
         $developer->save();
         return response($developer, Response::HTTP_CREATED);
     }
+    public function delete($name){
+        $data = Platform::find($name);
+        $data->delete();
+        return response($name, 'Record deleted successfully');
+    }
+
+    public function update($name, Request $request){
+        $data = Platform::find($name);
+        $data->name = $request->input('name');
+        $data->save();
+        return response($$request->input('name'),  Response::HTTP_ACCEPTED);
+    }
 }
