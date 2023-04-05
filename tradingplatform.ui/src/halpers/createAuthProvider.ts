@@ -14,12 +14,15 @@ export const createAuthProvider = () => {
     const authHeader = async () => {
         const token = await tokenProvider.getToken();
         console.log(token);
+        let headers;
         if(token){
-            return { Authorization: 'Bearer ' + token };
+            headers = { Authorization: 'Bearer ' + token };
         }
         else{
-            return {};
+            headers = {};
         }
+
+        return [headers] as [typeof headers];
     }
 
     const getRole = () => {

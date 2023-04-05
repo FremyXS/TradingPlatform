@@ -6,19 +6,23 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import MenuPanel from "./components/MenuPanel/MenuPanel";
 import FiltersPanel from "./components/ProductsPanel/FiltersPanel";
+import AccountsPanel from "./components/AccountsPanel/AccountsPanel";
 
 import { postGenreAsync, updateGenreAsync } from "../../api/products/filters/genres.api";
 import { postDeveloperAsync, updateDeveloperAsync } from "../../api/products/filters/developers.api";
 import { postPlatformAsync, updatePlatformAsync } from "../../api/products/filters/platforms.api";
 import { postTypeProductAsync, updateTypeProductAsync } from "../../api/products/filters/type_products.api";
+import { roles } from '../../types/index.d';
 
 import './Account.scss';
+import { registerAsync } from "../../api/auth";
 
 function Account() {
+    const [swithRole, setSwithRole] = useState(roles.normal);
     const [isShowWindow, setIsShowWindow] = useState<boolean>(false);
     const [windowSetting, setWindowSetting]
-        = useState<{ 
-            headerName: "Genres" | "Platforms" | "Type Products" | "Developers" | null, 
+        = useState<{
+            headerName: 'Account' | "Genres" | "Platforms" | "Type Products" | "Developers" | null,
             value: string | null,
             method: "POST" | "UPDATE" | null
         }>({
@@ -27,26 +31,26 @@ function Account() {
             method: null
         });
 
-    const [fields, setFields] = useState<{
-        name: string
-    }>({ name: "" });
+    const [fields, setFields] = useState<
+        { name: string, email: string, password: string, password_confirmation: string, role: string }>
+        ({ name: "", email: "", password: "", password_confirmation: "", role: "" });
 
-    const [menuPanelSwither, setMenuPanelSwither] 
+    const [menuPanelSwither, setMenuPanelSwither]
         = useState<"Accounts" | "Filters" | "Products">("Accounts");
 
-    const onSetWindowAdd = (headerName: "Genres" | "Platforms" | "Type Products" | "Developers") => {
+    const onSetWindowAdd = (headerName: 'Account' | "Genres" | "Platforms" | "Type Products" | "Developers") => {
         setWindowSetting({
             ...windowSetting,
             headerName: headerName,
             method: "POST"
         });
 
-        setFields({ name: "" });
+        setFields({ ...fields, name: "" });
 
         setIsShowWindow(true);
     }
 
-    const onSetWindowUpdate = (headerName: "Genres" | "Platforms" | "Type Products" | "Developers", value: string) => {
+    const onSetWindowUpdate = (headerName: 'Account' | "Genres" | "Platforms" | "Type Products" | "Developers", value: string) => {
         setWindowSetting({
             ...windowSetting,
             headerName: headerName,
@@ -54,13 +58,17 @@ function Account() {
             method: "UPDATE"
         });
 
-        setFields({ name: value });
+        setFields({ ...fields, name: value });
 
         setIsShowWindow(true);
     }
 
+    const onCreateAccountAsync = async () => {
+        await registerAsync(fields);
+    }
+
     const onPostAsync = async () => {
-        switch(windowSetting.headerName){
+        switch (windowSetting.headerName) {
             case "Genres":
                 await postGenreAsync(fields);
                 break;
@@ -79,7 +87,7 @@ function Account() {
     }
 
     const onUpdateAsync = async () => {
-        switch(windowSetting.headerName){
+        switch (windowSetting.headerName) {
             case "Genres":
                 await updateGenreAsync(windowSetting.value!, fields);
                 break;
@@ -97,7 +105,8 @@ function Account() {
         }
     }
 
-    const getWindowModal = () => {
+    const getAccountsInputs = () => {
+
         const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const { name, value } = event.target;
 
@@ -108,12 +117,71 @@ function Account() {
 
             setFields(updatedForm);
         }
+        return (
+            <>
+                <div className="admin-panel__window-inputs">
+                    <Input
+                        value={fields.name}
+                        name="name"
+                        type="text"
+                        placeHolder={"name".toLocaleUpperCase()}
+                        onChange={onHandleChange} />
+                    <Input
+                        value={fields.email}
+                        name="email"
+                        type="text"
+                        placeHolder={"email".toLocaleUpperCase()}
+                        onChange={onHandleChange} />
+                    <Input
+                        value={fields.password}
+                        name="password"
+                        type="password"
+                        placeHolder={"password".toLocaleUpperCase()}
+                        onChange={onHandleChange} />
+                    <Input value={fields.password_confirmation}
+                        placeHolder={"password confirmation"}
+                        type="password"
+                        name="password_confirmation"
+                        onChange={onHandleChange} />
+                    <div className="admin-panel__window-inputs__radios">
+                        <div><span>Normal</span>
+                            <input checked={fields.role === roles.normal ? true : false}
+                                onChange={onHandleChange}
+                                type="radio" name="role" value={roles.normal} />
+                        </div>
+                        <div><span>Seller</span>
+                            <input checked={fields.role === roles.seller ? true : false}
+                                onChange={onHandleChange}
+                                type="radio" name="role" value={roles.seller} />
+                        </div>
+                    </div>
+                </div>
+                <div className="admin-panel__window-button">
+                    {windowSetting.method === "POST" &&
+                        <Button type="submit" onClick={onCreateAccountAsync}>Добавить</Button>
+                    }
+                    {windowSetting.method === "UPDATE" &&
+                        <Button type="submit" onClick={onUpdateAsync}>Обновить</Button>
+                    }
+                </div>
+            </>
+        )
+    }
 
-        return <WindowModal
-            headerName={windowSetting.headerName!}
-            iconHead={undefined}
-            onClick={() => setIsShowWindow(false)}>
-            <div className="admin-panel__window">
+    const getFiltersInputs = () => {
+
+        const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+
+            const updatedForm = {
+                ...fields,
+                [name]: value,
+            };
+
+            setFields(updatedForm);
+        }
+        return (
+            <>
                 <div className="admin-panel__window-inputs">
                     <Input
                         onChange={onHandleChange}
@@ -123,13 +191,30 @@ function Account() {
                         placeHolder={"name".toLocaleUpperCase()} />
                 </div>
                 <div className="admin-panel__window-button">
-                    {windowSetting.method === "POST" &&                    
+                    {windowSetting.method === "POST" &&
                         <Button type="submit" onClick={onPostAsync}>Добавить</Button>
                     }
-                    {windowSetting.method === "UPDATE" &&                    
+                    {windowSetting.method === "UPDATE" &&
                         <Button type="submit" onClick={onUpdateAsync}>Обновить</Button>
                     }
                 </div>
+            </>
+        )
+    }
+
+    const getWindowModal = () => {
+
+        return <WindowModal
+            headerName={windowSetting.headerName!}
+            iconHead={undefined}
+            onClick={() => setIsShowWindow(false)}>
+            <div className="admin-panel__window">
+                {menuPanelSwither === "Filters" &&
+                    getFiltersInputs()
+                }
+                {menuPanelSwither === "Accounts" &&
+                    getAccountsInputs()
+                }
             </div>
         </WindowModal>
     }
@@ -143,7 +228,14 @@ function Account() {
                 </div>
                 <div className="admin-panel__operations">
                     <MenuPanel value={menuPanelSwither} onClick={setMenuPanelSwither} />
-                    <FiltersPanel onSetWundowUpdate={onSetWindowUpdate} onSetWindowSetting={onSetWindowAdd} />
+                    {menuPanelSwither === "Filters" &&
+                        <FiltersPanel
+                            onSetWundowUpdate={onSetWindowUpdate}
+                            onSetWindowSetting={onSetWindowAdd} />
+                    }
+                    {menuPanelSwither === "Accounts" &&
+                        <AccountsPanel onSetWindowSetting={onSetWindowAdd} />
+                    }
                 </div>
             </div>
         </div>

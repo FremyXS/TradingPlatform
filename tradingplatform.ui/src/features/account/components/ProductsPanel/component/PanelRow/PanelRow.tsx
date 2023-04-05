@@ -6,8 +6,8 @@ import './PanelRow.scss';
 
 interface PanelRowType{
     title: string, 
-    onClickDelete: () => void,
-    onClickUpdate: () => void
+    onClickDelete?: () => void,
+    onClickUpdate?: () => void
 }
 
 function PanelRow({title, onClickDelete, onClickUpdate}:PanelRowType){

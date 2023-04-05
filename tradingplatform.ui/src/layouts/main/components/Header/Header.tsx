@@ -18,9 +18,10 @@ interface HeaderType {
     onClickAccount: () => void,
     onClickLogaout?: () => void,
     onClickToHome?: () => void,
+    onClickToProfile?:()=>void
 }
 
-function Header({ logged, role, onClickCart, onClickAccount, onClickLogaout, onClickToHome }: HeaderType) {
+function Header({ logged, role, onClickCart, onClickAccount, onClickLogaout, onClickToHome, onClickToProfile }: HeaderType) {
 
 
 
@@ -42,10 +43,12 @@ function Header({ logged, role, onClickCart, onClickAccount, onClickLogaout, onC
                             role && role === roles.admin?
                             [
                                 { name: "Панель Аккаунт", onClick: onClickAccount },
+                                { name: "Профиль", onClick: onClickToProfile!},
                                 { name: "Выйти", onClick: onClickLogaout! }
                             ]
                             :
                             [
+                                { name: "Профиль", onClick: onClickToProfile!},
                                 { name: "Выйти", onClick: onClickLogaout! }
                             ]
                         }

@@ -1,0 +1,18 @@
+.accounts-panel{    
+    width: 1000px;
+
+    .component-button > button{
+        width: 100%;
+    }
+
+    &__content-data{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        .panel-row:nth-last-child(n+2){
+            border-bottom: 1px solid black;
+        }
+    }
+}

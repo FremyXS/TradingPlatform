@@ -23,6 +23,23 @@
 
         margin: 0 20px;
 
+        &-inputs__radios{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            div {
+                
+                span{
+                    font-size: 24px;
+                    font-weight: 300;
+                    width: 100px;
+                }
+                display: flex;
+
+            }
+        }
+
         &-button{
             display: flex;
             justify-content: center;

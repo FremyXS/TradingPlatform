@@ -30,7 +30,8 @@ function MainLayout({ children }: { children: ReactNode }) {
                 onClickCart={() => setShowCartModal(true)}
                 onClickAccount={() => logged? navigate('/account') :setShowAccountModal(true)} 
                 onClickLogaout={() => authProvider.logout()}
-                onClickToHome={()=>navigate('/')}/>
+                onClickToHome={()=>navigate('/')}
+                onClickToProfile={()=>navigate('/profile')}/>
             {children}
         </div>
     );

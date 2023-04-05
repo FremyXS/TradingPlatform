@@ -82,10 +82,6 @@ function FiltersPanel({ onSetWindowSetting, onSetWundowUpdate } : FiltersPanelTy
         }
     }
 
-    function onClickUpdateAsync(value: string) {
-
-    }
-
     return (
         <div className="filters-panel">
             <Switcher>

@@ -57,6 +57,15 @@ export type UserToken = {
     role: string
 }
 
+export type UserProfileType = {
+    id: number,
+    name: string,
+    email: string,
+    email_verified_at: string,
+    address: string,    
+    role: string,
+}
+
 export const roles = {
     admin: "Admin",
     seller: "Seller",
