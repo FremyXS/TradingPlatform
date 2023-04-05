@@ -28,8 +28,10 @@ function Header({ logged, role, onClickCart, onClickAccount, onClickLogaout, onC
         <div className="header">
             <div className="header-in">
                 <LogoIcon height={70} onClick={onClickToHome}/>
-                <nav>
-                    <Link to="/catalog">Каталог</Link>
+                <nav className="header-in__menu">
+                    <Link to="/catalog">
+                        <h4>Каталог</h4>
+                    </Link>
                 </nav>
                 <CartIcon
                     height={40}

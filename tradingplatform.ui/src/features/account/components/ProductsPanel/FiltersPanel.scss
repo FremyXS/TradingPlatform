@@ -1,4 +1,5 @@
-.products-panel{
+.filters-panel{
+    width: 1000px;
     &__content{
         display: flex;
         flex-direction: column;
@@ -13,5 +14,9 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+
+        .panel-row:nth-last-child(n+2){
+            border-bottom: 1px solid black;
+        }
     }
 }

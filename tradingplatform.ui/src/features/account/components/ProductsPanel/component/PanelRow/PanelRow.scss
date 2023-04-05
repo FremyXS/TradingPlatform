@@ -1,8 +1,12 @@
 .panel-row{
     display: flex;
     flex-direction: row;
-    gap: 20px;
     align-items: center;
+    justify-content: space-around;
+    
+    padding-bottom: 5px;
+    width: 100%;
+
     p {
         width: 400px;
         font-size: 25px;

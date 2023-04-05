@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProductsAsync } from '../../api/product';
+import { getProductsAsync } from '../../api/products/product';
 import ProductCard from "./components/ProductCard/ProductCard";
 import { ProducType } from "../../types";
 

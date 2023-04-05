@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getFiltersAsync } from "../../../../api/product";
+import { getFiltersAsync } from "../../../../api/products/product";
 import Button from "../../../../components/Button/Button";
 import { FiltersType } from "../../../../types";
 import FilterCard from "./components/FilterCard/FilterCard";

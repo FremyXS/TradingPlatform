@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FiltersBlock from "./components/FiltersBlock/FiltersBlock";
 import CatalogList from "./components/CatalogList/CatalogList";
-import { getProductsAsync } from "../../api/product";
+import { getProductsAsync } from "../../api/products/product";
 import { ProducType } from "../../types";
 
 import './Catalog.scss';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import { getProductAsync } from '../../../../api/product';
+import { getProductAsync } from '../../../../api/products/product';
 import Button from "../../../../components/Button/Button";
 import { CartProductData, ProducType } from "../../../../types";
 import './ProductInfo.scss';
