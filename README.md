@@ -18,6 +18,19 @@ TradingPlatform - интернет магазин, реализованный н
  - Разработчик
  - Id продавца
 
+Api:
+ - api/products
+    - / - Получение всех продуктов (ProductController@index)
+    - /get-sellers - Получение всех продуктов (ProductController@getBySellerId)
+    - /filters - Получение всех фильтров (ProductController@getAllFilters)
+    - /{id} - Получение полной информации об одном продукте (ProductController@show)
+    - /create - Добавление продукта (ProductController@store)
+ - api/filters
+    - /genres
+    - /platforms
+    - /type-products
+    - /developers
+
 ## Sales Service (tradingplatform.sales)
 Сервис, отвечающий за покупки на сайте.
 Хранит информацию о заказах, в которой указаны:
@@ -31,6 +44,19 @@ TradingPlatform - интернет магазин, реализованный н
 ## Email Service (tradinglpatform.email)
 Сервис, отвечающий за отправку писемь на почту.
 
+Api:
+ - api/email - Отправка текста по почте (EmailController@send)
+
 ## Auth Service (tradinglpatform.auth)
 Сервис, который отвечает за аутентификацию и авторизацию на сайте. Хранит данные входа пользователя на сайт.
 Использует JWT - токен
+
+Api:
+ - api/auth
+    - /register - Регистрация (AuthController@register)
+    - /login - Авторизация (AuthController@login) 
+    - /logout - Выход из системы (AuthController@logout)
+    - /refresh - обновление токена (AuthController@refresh)
+    - /user-profile - получение авторзированного юзера по токену (AuthController@userProfile)
+- api/users
+    - /index - список всех юзеров (UserController@index)
