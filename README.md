@@ -18,7 +18,7 @@ TradingPlatform - интернет магазин, реализованный н
  - Разработчик
  - Id продавца
 
-Api:
+### Api:
  - api/products
     - / - Получение всех продуктов (ProductController@index)
     - /get-sellers - Получение всех продуктов (ProductController@getBySellerId)
@@ -43,15 +43,14 @@ Api:
 
 ## Email Service (tradinglpatform.email)
 Сервис, отвечающий за отправку писемь на почту.
-
-Api:
+### Api:
  - api/email - Отправка текста по почте (EmailController@send)
 
 ## Auth Service (tradinglpatform.auth)
 Сервис, который отвечает за аутентификацию и авторизацию на сайте. Хранит данные входа пользователя на сайт.
 Использует JWT - токен
 
-Api:
+### Api:
  - api/auth
     - /register - Регистрация (AuthController@register)
     - /login - Авторизация (AuthController@login) 
