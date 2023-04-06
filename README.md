@@ -1,6 +1,6 @@
-# TradinglPatform
+# TradingPlatform
 
-TradinglPatform - интернет магазин, реализованный на микросервисах laravel  
+TradingPlatform - интернет магазин, реализованный на микросервисах laravel  
 
 ## UI Service (tradingplatform.ui)
 Сервис, отвчающий за весь фронт сайта. ( Пучбличная и админ часть )
