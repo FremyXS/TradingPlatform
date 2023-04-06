@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('type_products_name')->nullable();
             $table->string('platforms_name')->nullable();
             $table->string('developers_name')->nullable();
+            $table->bigInteger('seller_id');
             $table->timestamps();
         });
     }

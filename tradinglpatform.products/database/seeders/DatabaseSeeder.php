@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             PlatformSeeder::class,
             TypeProductSeeder::class,
             DeveloperSeeder::class,
-            ProductSeeder::class
+            // ProductSeeder::class
         ]);
     }
 }

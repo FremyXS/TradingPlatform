@@ -16,7 +16,16 @@ class product extends Model
     ];
 
     protected $fillable = [
+        'title',
+        'image_url',
+        'description',
+        'release_date',
+        'price',
         'genres_name',
+        'type_products_name',
+        'platforms_name',
+        'developers_name',
+        'seller_id',
     ];
 
     public function genre()

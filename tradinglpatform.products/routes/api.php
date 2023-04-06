@@ -26,8 +26,10 @@ Route::group([
     'prefix'=>"products"
 ], function($router){
     Route::get('/', [ProductController::class, 'index']);
+    Route::post('/get-sellers', [ProductController::class, 'getBySellerId']);
     Route::get('/filters', [ProductController::class, 'getAllFilters']);
     Route::get('/{id}', [ProductController::class, 'show']);
+    Route::post('/create', [ProductController::class, 'store']);
 });
 
 Route::group([

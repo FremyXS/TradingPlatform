@@ -19,6 +19,19 @@ class ProductController extends Controller
         return Product::all();
     }
 
+    public function getBySellerId(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
+        return Product::all()->where('seller_id', '=', $validator->validate()['id']);
+    }
+
     public function getAllFilters(){
         return response()->json(
             [
@@ -37,7 +50,24 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $product = Product::create($request->only('title', 'price'));
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'image_url' => 'required',
+            'description' => 'required',
+            'release_date' => 'required',
+            'price' => 'required',
+            'genres_name' => 'required',
+            'type_products_name' => 'required',
+            'platforms_name' => 'required',
+            'developers_name' => 'required',
+            'seller_id' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
+        $product = Product::create($validator->validated());
 
         return response($product, Response::HTTP_CREATED);
     }

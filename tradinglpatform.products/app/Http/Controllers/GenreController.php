@@ -42,7 +42,7 @@ class GenreController extends Controller
         $data->save();
 
         foreach($products->values() as $product){
-            $product->update(['genres_name' => $request->input('name')]);
+            $product->update(['genres_name' => $request->only('name')]);
             $product->save();
         }
 
