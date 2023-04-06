@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { UserProfileType } from "../../types";
+import { UserProfileType} from "../../types";
+import {roles} from "../../types/index.d";
 import { getProfileAsync } from "../../api/auth";
 import { createAuthProvider } from "../../halpers/createAuthProvider";
+
+import ProductsSetting from "./components/ProductsSetting/ProductsSetting";
 
 import './Profile.scss';
 
 function Profile() {
+    const authProvider = createAuthProvider();
     const [user, setUser] = useState<UserProfileType>({
         id: 0,
         name: "",
@@ -34,7 +38,9 @@ function Profile() {
                     </div>
                 </div>
                 <div className="profile-main">
-
+                    {authProvider.getRole && authProvider.getRole() === roles.seller && 
+                        <ProductsSetting idUser={user.id}/>
+                    }
                 </div>
             </div>
         </div>

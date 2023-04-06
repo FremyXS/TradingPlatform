@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Button from "../../../../components/Button/Button";
-import { CartProductData } from "../../../../types";
+import { CartProductData, OrderType } from "../../../../types";
 import WindowModal from "../../../window-modal/WindowModal";
 
 import { ReactComponent as ArrowRight } from '../../../../assets/icons/arrow_right.svg'
@@ -9,12 +9,36 @@ import { ReactComponent as ArrowLeft } from '../../../../assets/icons/arrow_left
 import { ReactComponent as CartIcon } from '../../../../assets/icons/shopping-cart.svg';
 import { ReactComponent as Trash } from '../../../../assets/icons/trash.svg';
 
+import { postOrdersAsync } from "../../../../api/orders.api";
+import { getProfileAsync } from "../../../../api/auth";
+import { createAuthProvider } from "../../../../halpers/createAuthProvider";
+
 import './CartWindow.scss'
 
-function CartWindow({setShowCartModal}:{setShowCartModal: ()=>void}) {
+function CartWindow({ setShowCartModal }: { setShowCartModal: () => void }) {
     const [cookies, setCookie] = useCookies(['cart']);
+    const [orders, setOrders] = useState<OrderType[]>([]);
+    const [buyerId, setBuyerId] = useState<number>(0);
+
+    useEffect(()=>{
+        loadUserAsync();
+    }, [buyerId])
+
+    async function loadUserAsync(){
+        const authProvider = createAuthProvider();
+        const [headers] = await authProvider.authHeader();
+        const {data} = await getProfileAsync(headers);
+        setBuyerId(data.id);
+    }
 
     function onGetProductCart(cartProductData: CartProductData, index: number) {
+        setOrders([...orders, {
+            product_id: cartProductData.id,
+            buyer_id: buyerId,
+            seller_id: cartProductData.seller_id,
+            status: ""
+        }])
+
         return (
             <div key={index} className="cart-list__product">
                 <div className="cart-list__product-title">{cartProductData.title}</div>
@@ -56,6 +80,10 @@ function CartWindow({setShowCartModal}:{setShowCartModal: ()=>void}) {
             { path: '/' });
     }
 
+    async function onBuyClick() {
+        // await postOrdersAsync(orders);
+    }
+
     return (
         <WindowModal headerName="корзина"
             iconHead={<CartIcon height={40} />}
@@ -67,7 +95,8 @@ function CartWindow({setShowCartModal}:{setShowCartModal: ()=>void}) {
                     )}
                 </div>
                 <div className="cart-button">
-                    <Button type="submit">
+                    <Button onClick={() => onBuyClick}
+                        type="submit">
                         Заказать
                     </Button>
                 </div>

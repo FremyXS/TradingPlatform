@@ -1,0 +1,62 @@
+.products-setting {
+    width: 1000px;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .component-button>button {
+        width: 100%;
+    }
+}
+
+.product-window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &__button {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__inputs {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: visible;
+        margin-bottom: 20px;
+
+        &-radios {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            p {
+                font-size: 18px;
+                font-weight: 300;
+            }
+
+            &__element {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                border-bottom: 1px solid black;
+                padding-bottom: 10px;
+
+                div {
+
+                    span {
+                        font-size: 18px;
+                        font-weight: 300;
+                        width: 160px;
+                    }
+
+                    display: flex;
+
+                }
+            }
+        }
+    }
+}

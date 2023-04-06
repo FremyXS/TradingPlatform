@@ -18,7 +18,8 @@ function ProductInfo() {
         genres_name: "",
         type_products_name: "",
         platforms_name: "",
-        developers_name: ""
+        developers_name: "",
+        seller_id: 0
     });
     const [cookies, setCookie] = useCookies(['cart']);
 
@@ -83,10 +84,11 @@ function ProductInfo() {
 
     async function addDataIntoCahe() {
         const data: CartProductData = {
-            id: productInfo.id,
+            id: productInfo.id as number,
             title: productInfo.title,
             count: 1,
-            price: productInfo.price
+            price: productInfo.price,
+            seller_id: productInfo.seller_id
         }
 
         try {

@@ -1,5 +1,5 @@
 export type ProducType = {
-    id: number;
+    id?: number;
     title: string;
     image_url: string;
     description: string;
@@ -8,8 +8,16 @@ export type ProducType = {
     genres_name: string,
     type_products_name: string
     platforms_name: string,
-    developers_name: string
+    developers_name: string,
+    seller_id: number
 };
+
+export type OrderType = {
+    product_id: number,
+    buyer_id: number,
+    seller_id: number,
+    status: string
+}
 
 export type FilterType = {
     name: string
@@ -35,6 +43,7 @@ export type CartProductData = {
     title: string;
     count: number;
     price: number;
+    seller_id: number;
 }
 
 export type AccountRegisterData = {

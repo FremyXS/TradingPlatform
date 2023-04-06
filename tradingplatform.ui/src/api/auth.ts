@@ -10,8 +10,8 @@ export const registerAsync = async (account: AccountRegisterData) => {
     return await api().post(`${API_ROOT_AUTH}auth/register`, account);
 }
 
-export const refreshTokenAsync = async () => {
-    return await api().post<UserToken>(`${API_ROOT_AUTH}auth/refresh`);
+export const refreshTokenAsync = async (headers?: { Authorization: string; } | { Authorization?: undefined; }) => {
+    return await api(headers).post<UserToken>(`${API_ROOT_AUTH}auth/refresh`);
 }
 
 export const getProfileAsync = async (headers: { Authorization: string; } | { Authorization?: undefined; }) => {

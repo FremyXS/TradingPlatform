@@ -5,13 +5,13 @@ export default function createTokenProvider() {
     let _token: UserToken | null
         = JSON.parse(localStorage.getItem('user') as string) || null;
 
-    const getToken = async () => {
+    const getToken = async (headers?: { Authorization: string; } | { Authorization?: undefined; }) => {
         if (!_token) {
             return null;
         }
 
         if (isExpired(getExpirationDate(_token.access_token))) {
-            const { data: updatedToken } = await refreshTokenAsync();
+            const { data: updatedToken } = await refreshTokenAsync(headers);
             setToken(updatedToken);
         }
 

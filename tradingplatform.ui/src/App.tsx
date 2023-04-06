@@ -9,8 +9,9 @@ import Account from './features/account/Account';
 import { createAuthProvider } from './halpers/createAuthProvider';
 import { roles } from './types/index.d';
 
-import './styles/global.scss'
 import Profile from './features/profile/Profile';
+
+import './styles/global.scss'
 
 function App() {
   const authProvider = createAuthProvider();
