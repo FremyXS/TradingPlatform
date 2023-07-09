@@ -20,9 +20,9 @@ function CartWindow({ setShowCartModal }: { setShowCartModal: () => void }) {
     const [orders, setOrders] = useState<OrderType[]>([]);
     const [buyerId, setBuyerId] = useState<number>(0);
 
-    useEffect(()=>{
-        loadUserAsync();
-    }, [buyerId])
+    // useEffect(()=>{
+    //     loadUserAsync();
+    // }, [buyerId])
 
     async function loadUserAsync(){
         const authProvider = createAuthProvider();
@@ -32,12 +32,12 @@ function CartWindow({ setShowCartModal }: { setShowCartModal: () => void }) {
     }
 
     function onGetProductCart(cartProductData: CartProductData, index: number) {
-        setOrders([...orders, {
-            product_id: cartProductData.id,
-            buyer_id: buyerId,
-            seller_id: cartProductData.seller_id,
-            status: ""
-        }])
+        // setOrders([...orders, {
+        //     product_id: cartProductData.id,
+        //     buyer_id: buyerId,
+        //     seller_id: cartProductData.seller_id,
+        //     status: ""
+        // }])
 
         return (
             <div key={index} className="cart-list__product">
